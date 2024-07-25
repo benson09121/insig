@@ -296,7 +296,7 @@
                         <i class="fas fa-check-circle fa-2x checkmark-animation mt-3"></i>
                         <h1>Title successfully <br> saved!</h1>
                         <button type="button" id="exit-saved" class="btn btn-primary" data-bs-dismiss="modal"
-                            aria-label="Exit"onclick="">Okay</button>
+                            aria-label="Exit">Okay</button>
                     </div>
                 </div>
             </div>
@@ -304,7 +304,7 @@
 
 
         <!-- DELETE TITLE POPUP -->
-        <div class="modal fade" id="delete-title-popup" tabindex="-1" aria-labelledby="exampleModalLabel"
+        <div class="modal fade" id="delete-title-popup" tabindex="-1"
             aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -320,7 +320,7 @@
                                         data-bs-dismiss="modal">Cancel</button>
                                 </div>
                                 <div class="col-6"> <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                        data-bs-target="#title-deleted-popup" onclick="" >Delete</button>
+                                        id="delete-button" value="">Delete</button>
                                 </div>
                             </div>
                         </div>
@@ -338,7 +338,7 @@
                         <i class="fas fa-trash-alt fa-2x trash-animation"></i>
                         <h1>Title successfully <br> deleted!</h1>
                         <button type="button" id="exit-saved" class="btn btn-primary" data-bs-dismiss="modal"
-                            aria-label="Exit" onclick="">Okay</button>
+                            aria-label="Exit">Okay</button>
                     </div>
                 </div>
             </div>
@@ -349,16 +349,6 @@
 
     <script src="{% static '/js/collection.js' %}"> </script>
     
-    <!-- JS FOR BOOTSTRAP -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-
-    <!-- SCRIPTS OWL-CAROUSEL START-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
-        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script>
 
         function addTitle(TitleModal){
@@ -375,7 +365,7 @@
         
             })
         }
-    
+        
         $(document).ready(function () {
             $('.owl-carousel').owlCarousel(
                 {
@@ -410,12 +400,14 @@
                     
                         $("#list_cards").empty();
                         if(response != 0){
-                        for (var key in response){
-                            var author = response[key].author;
-                            var title = response[key].title;
-                            var type = response[key].type_name;
-                            var genre = response[key].genre_name;
-                            var id = response[key].id;
+                        for (let key in response){
+                            let {
+                                id,
+                                author, 
+                                title,
+                                type_name, 
+                                genre_name,
+                            } = response[key];
                             myCollections = `
                             <div class="card mb-3">
                 <div class="row g-0">
@@ -425,36 +417,30 @@
 
                     <div class="col-md-11">
                         <div class="card-body">
-                            <table id="" onclick="">
+                            <table onclick="location.href='${id}';">
                                 <tr>
                                     <td class="title_and_date">
                                         <p id="" style="justify-content: left;">${title}</p>
                                         <p class="card-text" style="justify-content: left; font-weight: 400;"><small
                                                 class="text-body-secondary">Last opened 3 mins ago</small></p>
-
                                     </td>
-
                                     <td class="author">
                                         <p>${author}</p>
                                     </td>
-
                                     <td class="type">
-                                        <p>${type}</p>
+                                        <p>${type_name}</p>
                                     </td>
-
                                     <td class="genre">
-                                        <p>${genre}</p>
+                                        <p>${genre_name}</p>
                                     </td>
                                 </tr>
                             </table>
 
                             <div class="buttons">
                                 <button class="heart"><i class="fas fa-heart"></i></button>
-                                <button class="delete" data-bs-toggle="modal" value="" onclick="";"><i
+                                <button class="delete" data-bs-toggle="modal" data-bs-target="#delete-title-popup" data-id="${id}"><i
                                         class="fas fa-trash-alt"></i></button>
                             </div>
-
-
                         </div>
 
                     </div>
@@ -463,14 +449,14 @@
                             `;
                             $("#list_cards").append(myCollections);
                         }
-                    var button = `<!-- Button trigger modal -->
+                    let button = `<!-- Button trigger modal -->
                     <button type="button" class="list_add_title" data-bs-toggle="modal" data-bs-target="#addTitle">
                         <i class="fas fa-plus"></i> Add Title
                     </button>`;
                     $("#list_cards").append(button);
                     }
                     else{
-                        var noCardTemplate = `<div class="empty-container text-center mt-3 mb-5">
+                        let noCardTemplate = `<div class="empty-container text-center mt-3 mb-5">
         <img src="${"{% static 'graphics/empty.svg' %}"}" alt="">
 
         <p class="card-text mt-3 fw-bold lh-1">Add new titles to fill your collection <br> and save future entries </p>
@@ -488,7 +474,30 @@
                     }
                 })
             },1500);
+
+            $('#delete-title-popup').on('shown.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var recipient = button.data('id');
+                var modal = $(this);
+                modal.find('#delete-button').val(recipient);
+            }) 
         });
+        const DeletedModal = new bootstrap.Modal(document.getElementById('title-deleted-popup'));
+        $('#delete-button').click(function(){
+          let collection_id = $(this).attr('value');
+          url = "{% url 'collection-detail' 1 %}".replace('1',collection_id);
+          $.ajax({
+            type: 'DELETE',
+            headers: {"X-CSRFToken": "{{ csrf_token }}" },
+            url: url,
+            success: function(response){
+                DeletedModal.show();    
+                console.log(response);
+            }, error: function(response){
+                console.log(response);
+            }
+          })
+        })
     </script>
 
 {% endblock add_scripts %}

@@ -1,0 +1,357 @@
+{% extends 'main/base.html'%}
+{% load static %}
+
+
+{% block title %}Entries{% endblock title%}
+
+{% block content %}
+        <div class="main">
+
+            <!-- ACTUAL CONTENT -->
+            <div class="content">
+
+                <div class="title">
+                    <div>
+                        <p class="title_header">Your Entries</p>
+                        <p class="subtitle">add and view entries from your title</p>
+                    </div>
+                </div>
+
+                 
+                <!-- TITLE HEADER -->
+<div class="title-header">
+    <div class="card mt-5">
+        <div class="row g-0">
+            <div class="col-md-5">
+                <div class="card-body">
+                  <h1 class="card-title">{{ collection.title }}</h1>
+  
+                  <div class="card-text">
+                    <p>{{ collection.author }}</p>
+                    <p class="date"> last_updated </p>
+                  </div>
+  
+                  <div class="type_and_genre">
+                    <p>{{ collection.type.name }}</p> <p>{{ collection.genre.name }}</p>
+                    </div>
+                  
+                    <div class="add-and-otherbtn">
+  
+                        <div class="add-entry-dropdown">
+                            <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#multiTabModal">
+                            Add Entry
+                            </button>
+                        </div>
+  
+                        <div class="buttons">
+                            <button class="heart"><i class="fas fa-heart"></i></button>
+                            <button class="delete"><i class="fas fa-trash-alt" data-bs-toggle="modal" data-bs-target="#delete-title-popup"></i></button>
+                            <button class="more-options"><i class="fas fa-ellipsis-v"></i></button>
+                        </div>
+                    </div>
+  
+                    
+                </div>
+            </div>
+          <div class="col-md-7">
+            <!-- <img src="./img/gradient.jpg" class="img-fluid rounded-start" alt="..."> -->
+            <div class="default overflow-hidden bg-primary"style="width: 42rem ; height: 17rem; border: none;">
+              <img src="https://th.bing.com/th/id/R.36a41659b82c009fe7d9be66c288c71b?rik=Ilzr9naYYeOs6Q&riu=http%3a%2f%2forig01.deviantart.net%2fce57%2ff%2f2013%2f038%2f0%2f5%2fdoodle__cat_by_pian_no-d5u4498.png&ehk=Elg27KtcepH%2b%2f1Iel4S8o%2bZn2vBjF%2frspyFyeZKhm%2b8%3d&risl=&pid=ImgRaw&r=0" class="card-img rounded-4 opacity-25" alt="chae" style="width: 30%; height: auto;">
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  
+
+
+                <!-- ENTRIES LIST HEADER & entries list & OFFCANVAS -->
+
+                <div class="hstack gap-3 mt-5">
+                    <p style="font-weight: 700; font-size: 25px;">entries in this title </p>
+                
+                    <div class="ms-auto">
+                        <div class="categorize_dropdown">
+                            <button class="categorize_btn" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                All <i class="fa-solid fa-angle-down"></i>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#">All</a></li>
+                                <li><a class="dropdown-item" href="#">Favorites</a></li>
+                                <li><a class="dropdown-item" href="#">Recent</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="p-2">
+                        <div class="search-container">
+                            <i class="fas fa-search"></i>
+                            <input type="search" placeholder="Search your titles" style="border: none; outline: none;">
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!-- ENTRIES LIST -->
+                
+                <div id='entry_error' class="entries">
+
+                    <div id='entry_card' class="row row-cols-1 row-cols-md-3 g-4 mt-3">               
+                                
+                    </div>
+                </div>
+                
+                <!-- OFFCANVAS -->
+                <div class="offcanvas offcanvas-end" data-bs-scroll="true" data-bs-backdrop="true" tabindex="-1" id="offcanvasScrolling"
+                    aria-labelledby="offcanvasScrollingLabel" data-bs-autohide="true">
+                    <div class="offcanvas-header">
+                        <h5 class="offcanvas-title" id="offcanvasScrollingLabel"><b>Name ng entry</b></h5>
+                        <p id="delete_text_id" hidden></p>
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <div class="offcanvas-body">
+                        <div class="img-container">
+                            <div class="default overflow-hidden" style="background: rgb(205,255,216);
+                            background: linear-gradient(72deg, rgba(205,255,216,1) 0%, rgba(148,185,255,1) 100%); border-radius: 15px; width: auto; height: 12rem;">
+                                <img src="https://th.bing.com/th/id/R.36a41659b82c009fe7d9be66c288c71b?rik=Ilzr9naYYeOs6Q&riu=http%3a%2f%2forig01.deviantart.net%2fce57%2ff%2f2013%2f038%2f0%2f5%2fdoodle__cat_by_pian_no-d5u4498.png&ehk=Elg27KtcepH%2b%2f1Iel4S8o%2bZn2vBjF%2frspyFyeZKhm%2b8%3d&risl=&pid=ImgRaw&r=0" class="card-img rounded-4 opacity-25" alt="chae" style="width: 30%; height: auto;">
+                            </div>
+                
+                
+                            <button class="btn btn-fullscreen" onclick="openFullscreen()">
+                                <i class="fas fa-expand"></i>
+                            </button>
+                        </div>
+                
+                        <div class="buttons-and-badges">
+                            <div class="badges mt-3 mb-3">
+                                <span class="badge text-bg-primary rounded-pill">Simplify</span>
+                                <span class="badge text-bg-primary rounded-pill">pg 17-18</span>
+                            </div>
+                
+                            <div class="buttons">
+                                <button class="bookmark"><i class="fas fa-bookmark"></i></button>
+                                <button class="copy"><i class="fas fa-copy"></i></button>
+                                <button class="print"><i class="fas fa-print"></i></button>
+                                <button class="delete"><i class="fas fa-trash-alt" data-bs-toggle="modal"
+                                        onclick=""></i></button>
+                                <button class="more-options"><i class="fas fa-ellipsis-v"></i></button>
+                            </div>
+                        </div>
+                
+                        <hr>
+                
+                        <div class="orig-text-container">
+                            <p class="text-header">original text</p>
+                            <p></p>
+                        </div>
+                
+                        <div class="simplified-text-container">
+                            <p class="text-header">simplified text</p>
+                            <p class="simplified-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa quos, nihil
+                                perferendis velit temporibus et. Nostrum quia numquam mollitia quam, hic laboriosam cupiditate nesciunt
+                                tenetur praesentium omnis nam repellat voluptatibus.</p>
+                        </div>
+                
+                    </div>
+                </div>
+
+                <br><hr><br>
+
+                <p style="font-weight: 700; font-size: 25px;">try out these tools</p>
+
+                <!-- OTHER TOOLS -->
+                 <div class="tools_container">
+
+                    <div class="row">
+                        <div class="col btn_holder">  
+                            <button class="btn_assessType" type="button" data-bs-toggle="modal" data-bs-target="#multiTabModal" data-tab="#simplify-tab">
+                                <i class="fas fa-magic"></i>
+                            </button>
+                            <p>Simplify</p>
+                        </div>
+
+                        <div class="col btn_holder"> 
+                            <button class="btn_assessType" type="button" data-bs-toggle="modal" data-bs-target="#multiTabModal" data-tab="#paraphrase-tab">
+                                <i class="fas fa-retweet"></i>
+                            </button>
+                            <p>Paraphrase</p>
+                        </div>
+
+                        <div class="col btn_holder"> 
+                            <button class="btn_assessType" type="button" data-bs-toggle="modal" data-bs-target="#multiTabModal" data-tab="#translate-tab">
+                                <i class="fas fa-language"></i>
+                            </button>
+                            <p>Translate</p>
+                        </div>
+
+                        <div class="col btn_holder"> 
+                            <button class="btn_assessType" type="button" data-bs-toggle="modal" data-bs-target="#cite-popup">
+                                <i class="fas fa-pen-to-square"></i> 
+                            </button>
+                            <p>Cite</p>
+                        </div>
+                    </div>
+                </div>
+            
+        </div>
+
+        <!-- DELETE TITLE POPUP -->
+        <div class="modal fade" id="delete-title-popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body p-5">
+                        <div class="text-center mb-4"> <i class="fas fa-question-circle fa-spin fa-3x" style="color: #005CD6;"></i> </div>
+                        <h1>Are you sure?</h1>
+                        <p>do you really want to delete this title? this process cannot be undone.</p>
+
+                        <div class="container-fluid"> <div class="row">
+                            <div class="col-6"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-6"> <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="DeleteTitles();">Delete</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            <!-- TITLE DELETED POPUP -->
+            <div class="modal fade" id="title-deleted-popup" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content title-deleted">
+                        <div class="modal-body">
+                            <i class="fas fa-trash-alt fa-2x trash-animation"></i>
+                            <h1>Title successfully <br> deleted!</h1>
+                            <button type="button" id="exit-saved" class="btn btn-primary" onclick="window.location.href='collection.php'" data-bs-dismiss="modal" aria-label="Exit">Okay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </body>
+
+
+        <!-- DELETE ENTRY POPUP -->
+        <div class="modal fade" id="delete-entry-popup" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body p-5">
+                        <div class="text-center mb-4"> <i class="fas fa-question-circle fa-spin fa-3x" style="color: #005CD6;"></i> </div>
+                        <h1>Are you sure?</h1>
+                        <p>do you really want to delete this entry? this process cannot be undone.</p>
+
+                        <div class="container-fluid"> <div class="row">
+                            <div class="col-6"> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            </div>
+                            <div class="col-6"> <button type="button" class="btn btn-danger" data-bs-toggle="modal">Delete</button>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+            <!-- ENTRY DELETED POPUP -->
+            <div class="modal fade" id="entry-deleted-popup" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content title-deleted">
+                        <div class="modal-body">
+                            <i class="fas fa-trash-alt fa-2x trash-animation"></i>
+                            <h1>Entry successfully <br> deleted!</h1>
+                            <button type="button" id="exit-saved" class="btn btn-primary" onclick="" data-bs-dismiss="modal" aria-label="Exit">Okay</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+{% include 'myapp/tools_popup.html'%}
+{% endblock content %}
+
+{% block add_scripts%}
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="{%static '/js/entries.js' %}" defer></script>
+<script>
+
+    $(document).ready(function() {
+
+        setInterval(function(){
+            $.ajax({
+                type: "GET",
+                url: "{% url 'entry-list' %}",
+                success: function(response){
+                    if(response != 0){
+                        $('#entry_card').empty();
+                    for (let key in response){
+                        let {
+                            text_scanned,
+                            text_generated,
+                            id,
+                            entry_name,
+                            page,
+                            feature,
+                            img_text,
+                        } = response[key];
+                        let myTemplate = `   
+                                    div class="col">
+                                    <div class="card h-100">
+                                        <div class="card-img-container">
+                                            <div class="default overflow-hidden" style="background: rgb(205,255,216);
+                                            background: linear-gradient(72deg, rgba(205,255,216,1) 0%, rgba(148,185,255,1) 100%);
+                                            border-radius: 15px 15px 0 0;
+                                            width: auto; 
+                                            height: 12rem;">
+                                            <img src="https://th.bing.com/th/id/R.36a41659b82c009fe7d9be66c288c71b?rik=Ilzr9naYYeOs6Q&riu=http%3a%2f%2forig01.deviantart.net%2fce57%2ff%2f2013%2f038%2f0%2f5%2fdoodle__cat_by_pian_no-d5u4498.png&ehk=Elg27KtcepH%2b%2f1Iel4S8o%2bZn2vBjF%2frspyFyeZKhm%2b8%3d&risl=&pid=ImgRaw&r=0" class="card-img rounded-4 opacity-25" alt="chae" style="width: 35%; height: auto;">
+                                            </div>
+                
+                                            <i class="fas fa-bookmark bookmark-overlay"></i>
+                                            
+                                        </div>
+                                        
+                                        <div class="card-body">
+                                            <div class="title-and-pg d-flex justify-content-between">
+                                                <h5 class="card-title"><b>asdasdasd</b></h5>
+                                            </div>
+                
+                                            <p class="card-text text-truncate">text_s</p>
+                
+                                            <div class="badges-and-view">
+                                                <div class="badges">
+                                                    <p>feature chosen</p>
+                                                    <p>pg page number</p>
+                                                </div>
+                                                <button class="btn btn-primary" type="button" onclick="" data-bs-toggle="offcanvas"
+                                                    data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">View<i
+                                                        class="fas fa-chevron-right"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                        $('#entry_card').append(myTemplate);
+                    }
+                }else{
+                    $('#entry_error').empty();
+                    let myTemplate = `<div class="empty-container text-center mt-3 mb-5">
+                        <img src="${"{% static 'graphics/empty.svg' %}"}" alt="">
+                        <p class="card-text-center mt-3 fw-bold lh-1">Add new entries to fill your titles </p>
+                    </div>`;
+                    $('#entry_error').append(myTemplate);
+                }
+
+                }, error: function(response){
+                    console.log(response);
+                }
+            })
+        },1000)
+    })
+
+</script>
+{% endblock add_scripts%}
+
+{% block add_stylesheet%}
+<link rel="stylesheet" href="{% static '/css/entries.css' %}">
+{% endblock add_stylesheet%}

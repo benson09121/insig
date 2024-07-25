@@ -3,6 +3,5 @@ from . import views
 
 urlpatterns = [
     path('', views.collections, name="collections"),
-    # path("Collection", views.getCollection, name="getCollection"),
-    # path("addCollection", views.addCollection,name="addCollection")
+   path('<int:pk>/', views.CollectionDetailView.as_view(), name="collection_detail")
 ]

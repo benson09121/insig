@@ -11,7 +11,12 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import dj_database_url
 from pathlib import Path
+from dotenv import load_dotenv
+import os
+import google.generativeai as genai
 
+
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,10 +25,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l8x=)j785ob$$7zh_nyub-xwf&d-7uw+zib&ahjk#@c36qwqp7'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv('DEBUG')
+
+genai.configure(
+        api_key = os.getenv('GEMINI_API_KEY')
+        )
 
 ALLOWED_HOSTS = []
 
@@ -88,7 +97,7 @@ DATABASES = {
     }
 }
 
-# DATABASES['default'] = dj_database_url.parse("postgresql://insightify_tcb0_user:1FgXcr4d7rBHcnnwq5iFb0mD3wC5sOZa@dpg-cq3o7n2ju9rs739hlk50-a.singapore-postgres.render.com/insightify_tcb0")
+# DATABASES['default'] = dj_database_url.parse(config('POSTGRES'))
 
 
 # Password validation

@@ -6,4 +6,5 @@ class UserStatOverviewSerializer(serializers.ModelSerializer):
         model = UserAccount
         fields = ('title_count', 'total_entries', 'total_test')
 
+
     

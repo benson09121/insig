@@ -59,15 +59,15 @@
         <div class="container">
             <div class="fig">
                 <p>titles</p>
-                <h1>{{ collection_count }}</h1></h1>
-            </div>
+                <h1 id="title_count">0</h1>
+           </div>
             <div class="fig">
                 <p>entries</p>
-                <h1>{{ entry_count }}</h1>
+                <h1 id="entries_count">0</h1>
             </div>
             <div class="fig">
                 <p>tests</p>
-                <h1>{{ test_count }}</h1>
+                <h1 id="total_test">0</h1>
             </div>
         </div>
         <div class="download">
@@ -88,7 +88,6 @@
             <h3 class="card-text fw-semibold">{{ user.username }}</h3>
             <p class="card-text">{{ user.email }}</p>
         </div>
-        
     </div>
 
     <div class="dropdown_content">
@@ -127,12 +126,20 @@
 <script>
 
 $(document).ready(function(){
-    setInterval({
+    setInterval(function(){
         $.ajax({
             type: "GET",
             url: "{% url 'userstat-detail' request.user.id %}",
             success: function(response){
-                console.log(response);
+                let title = $("#title_count");
+                let entries = $("#entries_count");
+                let test = $("#total_test")
+                title.empty();
+                entries.empty();
+                test.empty();
+               title.append(response.title_count);
+                entries.append(response.total_entries);
+                test.append(response.total_test);
             }, error: function(response){
 
             }

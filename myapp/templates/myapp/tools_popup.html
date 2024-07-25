@@ -1,0 +1,830 @@
+{% load static %}
+<!-- MODAL FOR TOOLS POPUP -->
+<div class="modal fade" id="multiTabModal" tabindex="-1" aria-labelledby="multiTabModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered custom-modal-width">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Tools</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <!-- Nav tabs -->
+                    <div class="tab-container">
+                        <div class="d-flex justify-content-between align-items-center mt-3 ms-2 me-2">
+                            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="simplify-tab" data-bs-toggle="tab" data-bs-target="#simplify" type="button" role="tab" aria-controls="simplify" aria-selected="true"><i class="fas fa-magic"></i> Simplify</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="paraphrase-tab" data-bs-toggle="tab" data-bs-target="#paraphrase" type="button" role="tab" aria-controls="paraphrase" aria-selected="false"><i class="fas fa-retweet"> </i> Paraphrase</button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="translate-tab" data-bs-toggle="tab" data-bs-target="#translate" type="button" role="tab" aria-controls="translate" aria-selected="false"><i class="fas fa-language"></i> Translate</button>
+                                </li>
+                                
+                            </ul>
+                            
+                        </div>
+                    
+                        <!-- Tab panes -->
+                        <div class="tab-content  ms-2 me-2 mb-3">
+
+                            <!-- FOR SIMPLIFY -->
+                            <div class="tab-pane fade show active" id="simplify" role="tabpanel" aria-labelledby="simplify-tab">
+                                <div class="clearfix">
+                                    <div class="left-col">
+                                        <!-- Title Header Container -->
+                                        <div class="title-row">
+                                            <div class="row align-items-center">
+                                                <h1>Your text</h1>
+                                            </div>
+                                        </div>                                        
+                                        <!-- Textarea -->
+                                         
+                                        <div class="textarea-container position-relative">
+                                            <textarea id="ytext"class="form-control input-text" placeholder="Enter or paste text to simplify" name="prompt" maxlength="4000"></textarea>
+                                            <!-- Absolute positioned copy button -->
+                                            <button class="btn btn-sm btn-icon position-absolute top-0 end-0 mt-2 me-3">
+                                                <i class="fa-solid fa-copy"></i>
+                                            </button>
+
+                                            <!-- File Upload Container -->
+                                            <div class="file-upload-container mt-3">
+                                                <div>
+                                                    <input type="file" id="uploadBtnSimplify" class="file-upload" accept=".jpeg,.jpg,.png,.pdf,.doc,.docx">
+                                                    <label for="uploadBtnSimplify"><i class="fa-solid fa-upload"></i> <br>Upload File</label>
+                                                </div>
+                                                
+                                                 <!-- Progress bar for file upload -->
+                                                <div class="progress mt-3" style="display: none;">
+                                                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Generate button -->
+                                        <div class="generate-container" style="justify-content: space-between; align-items: center; border-radius: 0 0 10px 10px;">
+                                            <p class="counter" style="margin: 20px 0 10px 20px; font-weight: 600; color: #005CD6;"><span>0</span>/4000</p>
+                                            
+                                            <div class="button-group">
+                                                <button id="simplifyGenerating" class="btn btn-primary btn-generating" type="button" disabled style="display: none; font-weight: 600; border-radius: 14px; margin-left: 10px;">
+                                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                                    <span role="status">Generating...</span>
+                                                </button>
+                                                <button type="submit" id="Simplify" class="btn btn-primary btn-generate" style="font-weight: 600; border-radius: 14px; margin-left: 10px;">Generate                                         
+                                                </button>                                        
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    
+                                    <div class="right-col">
+                                        <h1>Simplified Text</h1>
+                                        <div class="textarea-container position-relative">
+                                            <textarea id="stext"class="form-control result-text" readonly></textarea>
+                                            <!-- Absolute positioned copy button -->
+                                            <button class="btn btn-sm btn-icon position-absolute top-0 end-0 mt-2 me-3">
+                                                <i class="fa-solid fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+                            <!-- FOR PARAPHRASE -->
+                            <div class="tab-pane fade" id="paraphrase" role="tabpanel" aria-labelledby="paraphrase-tab">
+                                <div class="clearfix">
+                                    <div class="left-col">
+                                        <!-- Title Header Container -->
+                                        <div class="title-row">
+                                            <div class="row align-items-center">
+                                                <h1>Your text</h1>
+                                            </div>
+                                        </div>                                        
+                                        <!-- Textarea -->
+                                        <div class="textarea-container position-relative">
+                                            <textarea id="ytext1"class="form-control input-text" placeholder="Enter or paste text to paraphrase" maxlength="4000"></textarea>
+                                            <!-- Absolute positioned copy button -->
+                                            <button class="btn btn-sm btn-icon position-absolute top-0 end-0 mt-2 me-3">
+                                                <i class="fa-solid fa-copy"></i>
+                                            </button>
+
+                                            <!-- File Upload Container -->
+                                            <div class="file-upload-container mt-3">
+                                                <div>
+                                                    <input type="file" id="uploadBtnParaphrase" accept=".jpeg,.jpg,.png,.pdf,.doc,.docx">
+                                                    <label for="uploadBtnParaphrase"><i class="fa-solid fa-upload"></i> <br>Upload File</label>
+                                                </div>
+
+                                                <!-- Progress bar for file upload -->
+                                                <div class="progress mt-3" style="display: none;">
+                                                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>                                          
+                                            </div>
+                                        </div>
+
+                                        <!-- Generate button -->
+                                        <div class="generate-container" style="justify-content: space-between; align-items: center; border-radius: 0 0 10px 10px;">
+                                            <p class="counter" style="margin: 20px 0 10px 20px; font-weight: 600; color: #005CD6;"><span>0</span>/4000</p>
+                                            
+                                            <div class="button-group">
+                                                <button id="paraphraseGenerating" class="btn btn-primary btn-generating" type="button" disabled style="display: none; font-weight: 600; border-radius: 14px; margin-left: 10px;">
+                                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                                    <span role="status">Generating...</span>
+                                                </button>
+
+                                                <button id="Paraphrase" class="btn btn-primary btn-generate" style="font-weight: 600; border-radius: 14px; margin-left: 10px;">
+                                                    Generate
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="right-col">
+                                        <h1>Paraphrased Text</h1>
+                                        <div class="textarea-container position-relative">
+                                            <textarea id="ptext"class="form-control result-text" readonly></textarea>
+                                            <!-- Absolute positioned copy button -->
+                                            <button class="btn btn-sm btn-icon position-absolute top-0 end-0 mt-2 me-3">
+                                                <i class="fa-solid fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FOR TRANSLATE -->
+                            <div class="tab-pane fade" id="translate" role="tabpanel" aria-labelledby="translate-tab">
+                                <div class="clearfix">
+                                    <div class="left-col">
+                                        <div class="dropdown-lang">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="detectLanguageDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">Detect Language</button>
+                                            <ul class="dropdown-menu" id="detectLanguageDropdown" aria-labelledby="detectLanguageDropdownButton">
+                                                <input type="text" class="form-control input-lang" placeholder="Search languages..." onkeydown="return /[a-zA-Z]/i.test(event.key)">
+                                                <li><a class="dropdown-item" href="#" value="Tagalog">Filipino</a></li>
+                                                <li><a class="dropdown-item" href="#" value="en">English</a></li>
+                                                <li><a class="dropdown-item" href="#" value="fr">French</a></li>
+                                                <li><a class="dropdown-item" href="#" value="es">Spanish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="de">German</a></li>
+                                                <li><a class="dropdown-item" href="#" value="it">Italian</a></li>
+                                                <li><a class="dropdown-item" href="#" value="pt">Portuguese</a></li>
+                                                <li><a class="dropdown-item" href="#" value="ru">Russian</a></li>
+                                                <li><a class="dropdown-item" href="#" value="ja">Japanese</a></li>
+                                                <li><a class="dropdown-item" href="#" value="ko">Korean</a></li>
+                                                <li><a class="dropdown-item" href="#" value="zh">Chinese</a></li>
+                                                <li><a class="dropdown-item" href="#" value="ar">Arabic</a></li>
+                                                <li><a class="dropdown-item" href="#" value="hi">Hindi</a></li>
+                                                <li><a class="dropdown-item" href="#" value="bn">Bengali</a></li>
+                                                <li><a class="dropdown-item" href="#" value="tr">Turkish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="pl">Polish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="nl">Dutch</a></li>
+                                                <li><a class="dropdown-item" href="#" value="sv">Swedish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="fi">Finnish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="cs">Czech</a></li>
+                                                <li><a class="dropdown-item" href="#" value="el">Greek</a></li>
+                                            </ul>
+                                        </div>
+
+                                        <!-- Textarea -->
+                                        <div class="textarea-container position-relative">
+                                            <textarea id="ytext2" class="form-control input-text" placeholder="Enter or paste text to translate" maxlength="4000"></textarea>
+                                            <!-- Absolute positioned copy button -->
+                                            <button class="btn btn-sm btn-icon position-absolute top-0 end-0 mt-2 me-3">
+                                                <i class="fa-solid fa-copy"></i>
+                                            </button>
+
+                                            <!-- File Upload Container -->
+                                            <div class="file-upload-container mt-3">
+                                                <div>
+                                                    <input type="file" id="uploadBtnTranslate" accept=".jpeg,.jpg,.png,.pdf,.doc,.docx">
+                                                    <label for="uploadBtnTranslate"><i class="fa-solid fa-upload"></i> <br>Upload File</label>
+                                                </div>
+
+                                                <!-- Progress bar for file upload -->
+                                                <div class="progress mt-3" style="display: none;">
+                                                    <div class="progress-bar" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Generate button -->
+                                        <div class="generate-container" style="justify-content: space-between; align-items: center; border-radius: 0 0 10px 10px;">
+                                            <p class="counter" style="margin: 20px 0 10px 20px; font-weight: 600; color: #005CD6;"><span>0</span>/4000</p>
+                                            
+                                            <div class="button-group">
+                                                <button id="translateGenerating" class="btn btn-primary btn-generating" type="button" disabled style="display: none; font-weight: 600; border-radius: 14px; margin-left: 10px;">
+                                                    <span class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+                                                    <span role="status">Generating...</span>
+                                                </button>
+
+                                                <button id="Translate" class="btn btn-primary btn-generate" style="font-weight: 600; border-radius: 14px; margin-left: 10px;">
+                                                    Generate
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+
+                                    <div class="right-col">
+                                        <div class="dropdown-lang">
+                                            <button class="btn btn-secondary dropdown-toggle" type="button" id="chooseLanguageDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">Choose Language</button>
+                                            <ul class="dropdown-menu" id="chooseLanguageDropdown" aria-labelledby="chooseLanguageDropdownButton">
+                                                <input type="text" class="form-control input-lang" placeholder="Search languages..." onkeydown="return /[a-zA-Z]/i.test(event.key)">
+                                                <li><a class="dropdown-item" href="#" value="Tagalog">Filipino</a></li>
+                                                <li><a class="dropdown-item" href="#" value="en">English</a></li>
+                                                <li><a class="dropdown-item" href="#" value="fr">French</a></li>
+                                                <li><a class="dropdown-item" href="#" value="es">Spanish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="de">German</a></li>
+                                                <li><a class="dropdown-item" href="#" value="it">Italian</a></li>
+                                                <li><a class="dropdown-item" href="#" value="pt">Portuguese</a></li>
+                                                <li><a class="dropdown-item" href="#" value="ru">Russian</a></li>
+                                                <li><a class="dropdown-item" href="#" value="ja">Japanese</a></li>
+                                                <li><a class="dropdown-item" href="#" value="ko">Korean</a></li>
+                                                <li><a class="dropdown-item" href="#" value="zh">Chinese</a></li>
+                                                <li><a class="dropdown-item" href="#" value="ar">Arabic</a></li>
+                                                <li><a class="dropdown-item" href="#" value="hi">Hindi</a></li>
+                                                <li><a class="dropdown-item" href="#" value="bn">Bengali</a></li>
+                                                <li><a class="dropdown-item" href="#" value="tr">Turkish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="pl">Polish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="nl">Dutch</a></li>
+                                                <li><a class="dropdown-item" href="#" value="sv">Swedish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="fi">Finnish</a></li>
+                                                <li><a class="dropdown-item" href="#" value="cs">Czech</a></li>
+                                                <li><a class="dropdown-item" href="#" value="el">Greek</a></li>
+                                            </ul>
+                                        </div>
+                                        <div class="textarea-container position-relative">
+                                            <textarea id="ttext"class="form-control result-text" readonly></textarea>
+                                            <!-- Absolute positioned copy button -->
+                                            <button class="btn btn-sm btn-icon position-absolute top-0 end-0 mt-2 me-3">
+                                                <i class="fa-solid fa-copy"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer-buttons mb-4 me-4">
+                    <button type="button" class="btn btn-danger" id="resetBtn">Reset</button>
+                    <button id="saveButton" type="button" class="btn btn-primary">Save Entry</button>
+                </div>
+            </div>
+        </div>
+        <div class="toast-empty-textarea">
+            <div class="toast-container position-fixed top-0 start-50 translate-middle-x p-3">
+                <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                        <img src="{% static '/logo/symbol_blue.png' %}" class="rounded me-2 logo-img-toast" alt="...">
+                        <strong class="me-auto">Insightify</strong>
+                        <small>Now</small>
+                        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">
+                        Enter text before generating.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!-- MODAL POPUP FOR SAVE ENTRY --> 
+        <div class="modal fade" id="saveEntry" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+        
+                    <div class="modal-header bg-primary text-light  ">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel"><b>Save Entry</b></h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+        
+                    <div class="modal-body pt-5 ps-5 pe-5 pb-3">
+                            <h1>Provide entry details</h1>
+                            <hr>
+
+                            <form class="row g-3 needs-validation" id="form-entry" novalidate>
+                                <div class="col-12">
+                                    <label for="validationEntryName" class="form-label"><b>entry name</b></label>
+                                    <input type="text" class="form-control" id="validationEntryName" required>
+                                    <div class="invalid-feedback">
+                                                Please enter a name.
+                                                </div>
+                                    <div class="valid-feedback">
+                                    Looks good!
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <label for="validationSelectTitle" class="form-label"><b>select title</b></label>
+                                        <div class="row">
+                                            <div class="col-11">
+                                                <select id="titles"class="form-select" id="validationSelectTitle" required>
+                            
+                                                </select>
+                                                <div class="invalid-feedback">
+                                                Please choose from your existing titles.
+                                                </div>
+                                            </div>
+
+                                            <div class="col-1">
+                                                <button class="add_title">
+                                                    <i class="fa-solid fa-notes-medical fa-xl " style="color: white;" id="title_add"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    
+                                </div>
+                                <div class="col-12">
+                                    <label for="validationPage" class="form-label"><b>page</b></label>
+                                    <div class="input-group has-validation">
+                                    <input type="text" class="form-control" id="validationPage" aria-describedby="inputGroupPrepend" placeholder="optional" onkeydown="return /^[0-9]$/i.test(event.key) || event.key === 'Backspace'">
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer-button mt-4">
+                                    <button class="btn btn-primary" type="submit">Finish</button>
+                                </div>
+                            </form>
+
+                            
+                        </div>
+
+                    
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- ENTRY SAVED POPUP -->
+        <div class="modal fade" id="entry-saved-popup" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content entry-saved">
+                    <div class="modal-body">
+                        <i class="fas fa-check-circle fa-2x checkmark-animation mt-3"></i>
+                        <h1>Entry successfully <br> saved!</h1>
+                        <button type="button" id="exit-saved" class="btn btn-primary" data-bs-dismiss="modal" aria-label="Exit" onclick="">Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!-- CITE POPUP -->
+        <div class="modal fade modal-xl" id="cite-popup" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Cite source</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body pt-4 pb-4 ps-5 pe-5">
+
+                    <div class="source-style">
+                        <div class="row align-items-start">
+                            <div class="col">
+                                <label for="source-type" class="form-label"><b>select source</b></label>
+                                <select class="form-select" required aria-label="select example">
+                                    <option selected>Website</option>
+                                    <option value="1">Thesis</option>
+                                    <option value="2">Journal</option>
+                                    <option value="3">Book</option>
+                                </select>
+                            </div>
+
+                            <div class="col">
+                                <label for="source-type" class="form-label"><b>select style</b></label>
+                                <select class="form-select" required aria-label="select example">
+                                    <option selected>APA 7</option>
+                                    <option value="1">IEEE</option>
+                                    <option value="2">MLA</option>
+                                    <option value="3">APA 6</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="preview-container mt-3 position-relative">
+                        <label for="preview" class="form-label"><b>preview</b></label>
+                        <input class="form-control" type="text" value="Citation preview here" aria-label="readonly input example" readonly id="previewInput">
+                        <button class="copy-button" onclick="copyText()">
+                            <i class="fas fa-copy"></i> 
+                        </button>
+                    </div>
+
+                    <div class="header-divider mt-5">
+                        <div class="row align-items-center">  
+                            <div class="col-auto">   
+                                <h2>Contributor</h2>
+                            </div>
+                            <div class="col d-flex align-items-center">
+                                <hr style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="author mt-5">
+                        <div class="row align-items-center">
+                            <div class="col-3">
+                                <p>Author</p>
+                            </div>
+
+                            <div class="col-4">
+                                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="First Name">
+                            </div>
+
+                            <div class="col-4">
+                                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="Last Name">
+                            </div>
+
+                            <div class="col-1">
+                                <button>+</button>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="header-divider mt-5">
+                        <div class="row align-items-center">  
+                            <div class="col-auto">   
+                                <h2>Title / Page</h2>
+                            </div>
+                            <div class="col d-flex align-items-center">
+                                <hr style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="title-details mt-5">
+                        <div class="row align-items-center">
+                            <div class="col-3">
+                                <p>Date Published</p>
+                            </div>
+
+                            <div class="col-4">
+                                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="YYYY">
+                            </div>
+
+                            <div class="col-2">
+                                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="MM">
+                            </div>
+
+                            <div class="col-2">
+                                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="DD">
+                            </div>
+
+                            <div class="col-1">
+                                <button>Today</button>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mt-2">
+                            <div class="col-3">
+                                <p>Title of Article/Page</p>
+                            </div>
+
+                            <div class="col-9">
+                                <input type="name" class="form-control" id="exampleFormControlInput1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="header-divider mt-5">
+                        <div class="row align-items-center">  
+                            <div class="col-auto">   
+                                <h2>Website</h2>
+                            </div>
+                            <div class="col d-flex align-items-center">
+                                <hr style="width: 100%">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="website-details mt-5">
+                        <div class="row align-items-center mt-2">
+                            <div class="col-3">
+                                <p>Website Name</p>
+                            </div>
+
+                            <div class="col-9">
+                                <input type="name" class="form-control" id="exampleFormControlInput1">
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mt-2">
+                            <div class="col-3">
+                                <p>Publisher</p>
+                            </div>
+
+                            <div class="col-9">
+                                <input type="name" class="form-control" id="exampleFormControlInput1">
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mt-2">
+                            <div class="col-3">
+                                <p>URL</p>
+                            </div>
+
+                            <div class="col-9">
+                                <input type="name" class="form-control" id="exampleFormControlInput1">
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center mt-2">
+                            <div class="col-3">
+                                <p>Date Accessed</p>
+                            </div>
+
+                            <div class="col-4">
+                                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="YYYY">
+                            </div>
+
+                            <div class="col-2">
+                                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="MM">
+                            </div>
+
+                            <div class="col-2">
+                                <input type="name" class="form-control" id="exampleFormControlInput1" placeholder="DD">
+                            </div>
+
+                            <div class="col-1">
+                                <button>Today</button>
+                            </div>
+                        </div>
+
+                        <div class="save-btn-container">
+                            <button type="button" class="cite-save mt-3 mb-3" data-bs-dismiss="modal" aria-label="Close">Save</button>
+                        </div>
+                        
+                    </div>
+
+                </div>
+                
+            </div>
+            </div>
+        </div>
+        <!-- END OF CITE POPUP -->
+
+        <!-- MODAL/POPUP -->
+        
+        <!-- TITLE SAVED POPUP -->
+        <div class="modal fade" id="title-saved-popup_a" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content title-saved">
+                    <div class="modal-body">
+                        <i class="fas fa-check-circle fa-2x checkmark-animation mt-3"></i>
+                        <h1>Title successfully <br> saved!</h1>
+                        <button type="button" id="exit-saved" class="btn btn-primary" data-bs-dismiss="modal"
+                            aria-label="Exit">Okay</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.2/mammoth.browser.min.js"></script>
+<script>
+    $(document).ready(function() {
+               
+        function showToast(message, type) {
+            const toastEl = document.getElementById('liveToast');
+            const toastBody = toastEl.querySelector('.toast-body');
+            toastBody.textContent = message;
+
+            if (type === 'success') {
+                toastEl.classList.remove('toast-error');
+                toastEl.classList.add('toast-success');
+            } else {
+                toastEl.classList.remove('toast-success');
+                toastEl.classList.add('toast-error');
+            }
+    
+            const toast = new bootstrap.Toast(toastEl);
+            toast.show();
+        }
+
+       $('#resetBtn').on('click', function(){
+            const tabPane = $('.tab-pane.active');
+            const textarea = tabPane.find('.textarea-container textarea.input-text');
+            const outputarea = tabPane.find('.textarea-container textarea.result-text');
+            const file_upload = tabPane.find('.file-upload-container');
+            const counter = tabPane.find('p.counter');
+            file_upload.attr('style','display: block');
+            counter.find('span').text("0");
+            textarea.val('')
+            outputarea.val('');
+            showToast('All fields have been cleared successfully.');
+       })
+       $('#saveButton').on('click', function(){
+
+            const tabPane = $('.tab-pane.active');
+            const textarea = tabPane.find('.textarea-container textarea.input-text');
+            const outputarea = tabPane.find('.textarea-container textarea.result-text');
+            
+            if ( !textarea.val() || !outputarea.val()){
+             showToast('Enter text to save.', 'error');
+            }else{
+                saveEntry = new bootstrap.Modal(document.getElementById('saveEntry'));
+                $('#multiTabModal').modal('hide');
+                $.ajax({
+                    type: "GET",
+                    url: "{% url 'collection-list' %}",
+                    success: function(response){
+                        $('#titles').empty();
+                        $('#titles').append('<option selected disabled>Choose from existing titles</option>');
+                        for(let key in response){
+                            let { 
+                                title,
+                                user,
+                                id,
+                            } = response[key];
+                            let element = '<option value="'+ id +'" user="'+ user +'">'+ title +'</option>';
+                            $('#titles').append(element);                        
+                        }
+                    },error: function(response){
+        
+                    }
+        
+                })
+                saveEntry.show();
+            }
+       })
+
+        $('.input-text').on('input', function() {
+            const current_length = $(this).val().length;
+            const tabPane = $(this).closest('.tab-pane');
+            const counter = tabPane.find('p.counter');
+            const file_upload = tabPane.find('.file-upload-container');
+            if(current_length > 0){
+                file_upload.attr('style','display: none');
+            }
+            else{
+                file_upload.attr('style','display: block'); 
+            }
+            counter.find('span').text(current_length);
+        })
+
+       $('.dropdown-item').on('click', function(){
+           const tabPane = $(this).closest('.dropdown-lang');
+           const button = tabPane.find('button.dropdown-toggle');
+           const language = $(this).text();
+           button.text(language);
+       })
+       $('.input-lang').on('input', function() {
+        const inputText = $(this).val().toLowerCase();
+        const length = $(this).text().length;
+        const dropDown = $(this).closest('.dropdown-lang');
+        const items = dropDown.find('.dropdown-item');
+
+        items.each(function(){
+            let itemText = $(this).text().toLowerCase(); 
+            if(itemText.startsWith(inputText)){
+                $(this).attr('style', 'display: block');
+            }else{
+                $(this).attr('style', 'display: none');
+            }
+        })
+           
+        
+     })
+
+        $('.fa-copy').on('click', function(){
+            const container = $(this).closest('.textarea-container');
+            const textarea = container.find('textarea.form-control');
+            if(!textarea.val()){
+                showToast("Enter text to copy.", 'error');
+            }else{
+            $(textarea).select();
+            document.execCommand('copy');
+            showToast("Copied to Clipboard.", 'success');
+            }
+        })
+        
+        $('.btn-generate').on('click', function(){
+            const tabPane = $(this).closest('.tab-pane');
+            const textarea = tabPane.find("textarea.input-text");
+            const id = $(this).attr('id');
+            const check = $('#chooseLanguageDropdownButton').text();
+
+            if(!textarea.val()){
+                showToast("Enter text to proccess.", "error");
+            }
+            else if(check === "Choose Language" && id === "Translate"){
+                showToast("Choose a language to translate.", "error");
+            }
+            else{
+                const generatingButton = tabPane.find('button.btn-generating');
+                $(this).attr('style', 'display: none');
+                generatingButton.attr('style', 'display: block');
+                GenerateResponse(id, $(this), generatingButton); 
+            }
+        })
+
+        $('.needs-validation').on('submit', function(event){
+            let form = $(this)[0];
+            let modal = $(this).closest('.modal');
+            event.preventDefault();
+            event.stopPropagation();
+            if(form.checkValidity()){
+                modal.modal('hide');
+                SaveResponse(modal);
+            }else{
+                form.classList.add('was-validated');
+            }
+
+        })
+        function SaveResponse(){
+            let activePane = $('.tab-pane.active');
+            let textarea = activePane.find('textarea.input-text').val();
+            let result = activePane.find('textarea.result-text').val();
+            let choice = activePane.attr('id');
+            let entryname = $('#validationEntryName').val();
+            let page = $('#validationPage').val();
+            let title_id = $('#titles option:selected').val();
+            const savedModal = new bootstrap.Modal('#title-saved-popup_a');
+            console.log(entryname);
+            console.log(page);
+            console.log(title_id);
+            console.log(choice);
+            $.ajax({
+                type: 'POST',
+                url: "{% url 'entry-list' %}",
+                headers: {"X-CSRFToken": "{{ csrf_token }}" },
+                data: { entry_name : entryname,
+                      page : page,
+                      title : title_id,
+                      text_scanned : textarea ,
+                      text_generated :  textarea,
+                      feature : choice,
+                    },
+                success: function(response){
+                    savedModal.modal('show');
+                    console.log(response);
+                }, error: function(response){
+
+                }
+            })
+        }
+
+        function GenerateResponse(choice, generateButton, generatingButton){
+            const tabPane = $(generateButton).closest('.tab-pane');
+            const textarea = tabPane.find("textarea.input-text").val();
+            const result = tabPane.find("textarea.result-text");
+            const type = choice;
+            let start_lang = "";
+            let target_lang = "";
+            if(type === "Translate"){
+               start_lang = $('#detectLanguageDropdownButton').text();
+               target_lang = $('#chooseLanguageDropdownButton').text();
+               }
+            const data = { 
+               prompt: textarea,
+               type: choice,
+               start_lang: start_lang,
+               target_lang: target_lang,
+            }
+            $.ajax({
+            type: "POST",
+            headers: {"X-CSRFToken": "{{ csrf_token }}" },
+            url: "{% url 'gemini-list' %}",
+            data: data,
+            success: function(response){
+                let output = response.prompt.toLowerCase().trim();
+                if(output == 'type a text to simplify.'){
+                    showToast(response.prompt, 'error');
+                    generateButton.attr('style', 'display: block');
+                    generatingButton.attr('style', 'display: none');
+                }
+                else if(output == "type a text to paraphrase."){
+                    generateButton.attr('style', 'display: block');
+                    generatingButton.attr('style', 'display: none');
+                    showToast(response.prompt, 'error');
+                }
+                else if(output == "type a word to translate." || output == "there is an error translating your input"){
+                    generateButton.attr('style', 'display: block');
+                    generatingButton.attr('style', 'display: none');
+                    showToast(response.prompt, 'error');
+                }else{
+                result.val(response.prompt);
+                generateButton.attr('style', 'display: block');
+                generatingButton.attr('style', 'display: none');
+                }
+            },
+            error: function(response){
+                console.log(response);
+            }
+        })
+    }
+})
+
+</script>

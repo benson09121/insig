@@ -30,16 +30,17 @@ class EntryText(models.Model):
     text_scanned = models.TextField()
     text_generated = models.TextField()
 
-class TitleEntry(models.Model):
-    title = models.ForeignKey(to=CollectionTitles,related_name="entries",on_delete=models.CASCADE)
-    entry_name = models.CharField(max_length=20)
-    page = models.IntegerField()
-    text = models.ForeignKey(to=EntryText,on_delete=models.CASCADE)
-    text = models.ForeignKey(to="EntryImage",on_delete=models.CASCADE)
-
 class EntryImage(models.Model):
     image = models.ImageField()
     name = models.CharField(max_length=40)
     height = models.IntegerField()
     width = models.IntegerField()
     date_taken = models.DateField(auto_now_add=True)
+
+class TitleEntry(models.Model):
+    title = models.ForeignKey(to=CollectionTitles,related_name="entries",on_delete=models.CASCADE)
+    entry_name = models.CharField(max_length=20)
+    page = models.IntegerField()
+    text = models.ForeignKey(to=EntryText,on_delete=models.CASCADE)
+    image_text = models.ForeignKey(to=EntryImage,on_delete=models.CASCADE, null=True)
+

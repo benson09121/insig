@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Insightify](static/logo/symbol_blue.png)
+![Insightify](static/logo/full_blue.png)
 
 **An AI-Powered Educational Tool for Filipino Students**
 
